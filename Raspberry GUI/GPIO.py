@@ -31,22 +31,20 @@ def check_led_status(heure_on, heure_off, ledPin):
 def check_pompe_status(time_on, time_off):
     # Obtenir l'heure actuelle
     now = datetime.datetime.now()
+    
+    # Calculer le temps écoulé depuis minuit en minutes
+    temps_ecoule = now.hour * 60 + now.minute
 
-    # Calculer les moments pour allumer et éteindre la pompe
-    pompe_on_time = now.replace(minute=time_on, second=0, microsecond=0)
-    pompe_off_time = now.replace(minute=time_off, second=0, microsecond=0)
+    # Durée totale du cycle de la pompe (en minutes)
+    cycle_total = time_on + time_off
 
-    # Vérifier si l'heure actuelle est appropriée pour activer ou désactiver la pompe
-    if pompe_on_time <= now < pompe_off_time:
+    # Utilisation du modulo pour déterminer si la pompe doit être activée
+    if temps_ecoule % cycle_total < time_on:
         GPIO.output(pompePin, GPIO.HIGH)
         return "Pompe: GPIO HIGH"
     else:
         GPIO.output(pompePin, GPIO.LOW)
         return "Pompe: GPIO LOW"
-
-# Initialisation des compteurs pour la pompe
-compteur_on = 0
-compteur_off = 0
 
 try:
     while True:
@@ -75,7 +73,7 @@ try:
         print(check_pompe_status(time_on_pompe, time_off_pompe))
 
         # Délai avant la prochaine vérification
-        time.sleep(30)  # Pause de 30 secondes
+        time.sleep(5)  # Pause de 30 secondes
 
 except KeyboardInterrupt:
     GPIO.cleanup()
