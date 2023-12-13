@@ -32,10 +32,10 @@ def check_pompe_status(time_on, time_off):
     # Obtenir l'heure actuelle
     now = datetime.datetime.now()
     
-    # Calculer le temps écoulé depuis minuit en minutes
-    temps_ecoule = now.hour * 60 + now.minute
+    # Calculer le temps écoulé depuis minuit en secondes
+    temps_ecoule = now.hour * 3600 + now.minute * 60 + now.second
 
-    # Durée totale du cycle de la pompe (en minutes)
+    # Durée totale du cycle de la pompe (en secondes)
     cycle_total = time_on + time_off
 
     # Utilisation du modulo pour déterminer si la pompe doit être activée
@@ -61,8 +61,8 @@ try:
         heure_off_led3 = feuille['D3'].value
 
         # Lire les valeurs pour la pompe
-        time_on_pompe = feuille['F2'].value 
-        time_off_pompe = feuille['F3'].value
+        time_on_pompe = feuille['F2'].value*30   
+        time_off_pompe = feuille['F3'].value*30  #en secondes
 
         # Vérifier l'état de chaque LED
         print("LED 1:", check_led_status(heure_on_led1, heure_off_led1, led1Pin))
