@@ -7,7 +7,7 @@ from openpyxl import load_workbook
 fichier_excel = 'Aquapo.xlsx'
 
 # Pins Setup
-led1Pin = 9
+led1Pin = 13
 led2Pin = 3
 led3Pin = 4
 pompePin = 2
