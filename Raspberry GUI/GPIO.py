@@ -10,7 +10,7 @@ fichier_excel = 'Aquapo.xlsx'
 led1Pin = 13
 led2Pin = 3
 led3Pin = 4
-pompePin = 2
+pompePin = 26
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -27,6 +27,22 @@ def check_led_status(heure_on, heure_off, ledPin):
     else:
         GPIO.output(ledPin, GPIO.LOW)
         return "GPIO LOW"
+    
+def check_pompe_status(time_on, time_off):
+    # Obtenir l'heure actuelle
+    now = datetime.datetime.now()
+
+    # Calculer les moments pour allumer et éteindre la pompe
+    pompe_on_time = now.replace(minute=time_on, second=0, microsecond=0)
+    pompe_off_time = now.replace(minute=time_off, second=0, microsecond=0)
+
+    # Vérifier si l'heure actuelle est appropriée pour activer ou désactiver la pompe
+    if pompe_on_time <= now < pompe_off_time:
+        GPIO.output(pompePin, GPIO.HIGH)
+        return "Pompe: GPIO HIGH"
+    else:
+        GPIO.output(pompePin, GPIO.LOW)
+        return "Pompe: GPIO LOW"
 
 # Initialisation des compteurs pour la pompe
 compteur_on = 0
@@ -47,8 +63,8 @@ try:
         heure_off_led3 = feuille['D3'].value
 
         # Lire les valeurs pour la pompe
-        time_on_pompe = feuille['F2'].value * 30  # Convertir en secondes
-        time_off_pompe = feuille['F3'].value * 30  # Convertir en secondes
+        time_on_pompe = feuille['F2'].value 
+        time_off_pompe = feuille['F3'].value
 
         # Vérifier l'état de chaque LED
         print("LED 1:", check_led_status(heure_on_led1, heure_off_led1, led1Pin))
@@ -56,23 +72,10 @@ try:
         print("LED 3:", check_led_status(heure_on_led3, heure_off_led3, led3Pin))
 
         # Gestion de la pompe
-        if compteur_on < time_on_pompe // 30:
-            GPIO.output(pompePin, GPIO.HIGH)
-            print("Pompe: GPIO HIGH")
-            compteur_on += 1
-            compteur_off = 0
-        elif compteur_off < time_off_pompe // 30:
-            GPIO.output(pompePin, GPIO.LOW)
-            print("Pompe: GPIO LOW")
-            compteur_off += 1
-            compteur_on = 0
-        else:
-            # Réinitialiser les compteurs si les deux conditions sont remplies
-            compteur_on = 0
-            compteur_off = 0
+        print(check_pompe_status(time_on_pompe, time_off_pompe))
 
         # Délai avant la prochaine vérification
-        time.sleep(5)  # Pause de 5 secondes
+        time.sleep(30)  # Pause de 30 secondes
 
 except KeyboardInterrupt:
     GPIO.cleanup()
