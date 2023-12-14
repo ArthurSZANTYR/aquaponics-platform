@@ -17,6 +17,8 @@ selected_on_hour = 0
 selected_off_hour = 0
 saved_on_hour = 0
 saved_off_hour = 0
+slider_value3= 0
+saved_intensity=0
 
 # Définition des variables globales pour les valeurs des sliders et des comboboxes pour la LED n°2
 slider_value_led2 = 8
@@ -27,6 +29,8 @@ selected_on_hour_led2 = 0
 selected_off_hour_led2 = 0
 saved_on_hour_led2 = 0
 saved_off_hour_led2 = 0
+slider_value3_led2= 0
+saved_intensity_led2=0
 
 # Définition des variables globales pour les valeurs des sliders et des comboboxes pour la LED n°3
 slider_value_led3 = 8
@@ -37,6 +41,8 @@ selected_on_hour_led3 = 0
 selected_off_hour_led3 = 0
 saved_on_hour_led3 = 0
 saved_off_hour_led3 = 0
+slider_value3_led3= 0
+saved_intensity_led3=0
 
 # Déclaration des variables globales pour stocker les valeurs sauvegardées
 saved_minutes_on = "00"
@@ -57,7 +63,7 @@ def update_time():
     time_label.configure(text=current_time)
     home_frame.after(1000, update_time)  # Mise à jour de l'heure toutes les secondes
 
-def send_system1(heure_on, heure_off):
+def send_system1(heure_on, heure_off,intensity):
     # Chemin du fichier Excel existant
     fichier_excel = 'Aquapo.xlsx'
 
@@ -70,9 +76,10 @@ def send_system1(heure_on, heure_off):
     # feuille = workbook['NomDeLaFeuille']
     feuille['B2'] = heure_on
     feuille['B3'] = heure_off
+    feuille['B4'] = intensity
     workbook.save(fichier_excel)
 
-def send_system2(heure_on, heure_off):
+def send_system2(heure_on, heure_off,intensity):
     # Chemin du fichier Excel existant
     fichier_excel = 'Aquapo.xlsx'
 
@@ -85,6 +92,7 @@ def send_system2(heure_on, heure_off):
     # feuille = workbook['NomDeLaFeuille']
     feuille['C2'] = heure_on
     feuille['C3'] = heure_off
+    feuille['C4'] = intensity
     workbook.save(fichier_excel)
 
 def send_system3(heure_on, heure_off):
@@ -118,15 +126,16 @@ def send_system4(min_on,min_off):
     workbook.save(fichier_excel)
 
 def save_values():
-    global saved_slider_value, saved_slider_value2, saved_on_hour, saved_off_hour
+    global saved_slider_value, saved_slider_value2, saved_on_hour, saved_off_hour, saved_intensity
     saved_slider_value = slider_value
     saved_slider_value2 = slider_value2
     saved_on_hour = selected_on_hour
     saved_off_hour = selected_off_hour
-    send_system1(selected_on_hour,selected_off_hour)
+    save_intensity= slider_value3
+    send_system1(selected_on_hour,selected_off_hour,slider_value3)
 
 def show_led1_management():
-    global slider_value, slider_value2, selected_on_hour, selected_off_hour
+    global slider_value, slider_value2, selected_on_hour, selected_off_hour, slider_value3
 
     # Effacer tout contenu précédent dans home_frame
     for widget in home_frame.winfo_children():
@@ -202,16 +211,36 @@ def show_led1_management():
     off_time_combobox = ctk.CTkComboBox(home_frame, values=heures,command=off_time_combobox_changed)
     off_time_combobox.pack(pady=10)
 
+    def update_label3(value):
+        global slider_value3
+        slider_value3 = int(value)
+        slider3.set(slider_value3)
+        slider_value_label3.configure(text=f"{slider_value3}")
+
+    # Ajouter le texte "Intensity"
+    intensity_label = ctk.CTkLabel(home_frame, text="Intensity", font=("Roboto", 18))
+    intensity_label.pack(anchor='w', padx=180, pady=10)
+
+    slider3 = ctk.CTkSlider(home_frame, from_=0, to=10, number_of_steps=10, command=update_label3)
+    slider3.pack(pady=10)
+
+    slider_value_label3 = ctk.CTkLabel(home_frame, text="0")
+    slider_value_label3.place(x=570, y=540)
+
     slider.set(slider_value)
     slider2.set(slider_value2)
+    slider3.set(slider_value3)
     on_time_combobox.set(f"{selected_on_hour:02d}h")
     off_time_combobox.set(f"{selected_off_hour:02d}h")
     slider_value_label.configure(text=f"{slider_value} Hours")
     slider_value_label2.configure(text=f"{slider_value2} Hours")
+    slider_value_label3.configure(text=f"{slider_value3}")
+
 
     # Création du bouton Save
     save_button = ctk.CTkButton(home_frame, text="Save",font=("Roboto", 24), command=save_values)
     save_button.pack(anchor='e',padx=100)
+
 
      # Afficher l'heure actuelle
     global time_label
@@ -220,12 +249,13 @@ def show_led1_management():
     update_time()
     
 def save_values_led2():
-    global saved_slider_value_led2, saved_slider_value2_led2, saved_on_hour_led2, saved_off_hour_led2
+    global saved_slider_value_led2, saved_slider_value2_led2, saved_on_hour_led2, saved_off_hour_led2, saved_intensity_led2
     saved_slider_value_led2 = slider_value_led2
     saved_slider_value2_led2 = slider_value2_led2
     saved_on_hour_led2 = selected_on_hour_led2
     saved_off_hour_led2 = selected_off_hour_led2
-    send_system2(selected_on_hour_led2,selected_off_hour_led2)
+    save_intensity_led2= slider_value3_led2
+    send_system2(selected_on_hour_led2,selected_off_hour_led2,slider_value3_led2)
 
 def show_led2_management():
     global slider_value_led2, slider_value2_led2, selected_on_hour_led2, selected_off_hour_led2
@@ -303,9 +333,26 @@ def show_led2_management():
 
     off_time_combobox = ctk.CTkComboBox(home_frame, values=heures,command=off_time_combobox_changed)
     off_time_combobox.pack(pady=10)
+    
+    def update_label3(value):
+        global slider_value3_led2
+        slider_value3_led2 = int(value)
+        slider3.set(slider_value3_led2)
+        slider_value_label3.configure(text=f"{slider_value3_led2}")
+
+    # Ajouter le texte "Intensity"
+    intensity_label_led2 = ctk.CTkLabel(home_frame, text="Intensity", font=("Roboto", 18))
+    intensity_label_led2.pack(anchor='w', padx=180, pady=10)
+
+    slider3 = ctk.CTkSlider(home_frame, from_=0, to=10, number_of_steps=10, command=update_label3)
+    slider3.pack(pady=10)
+
+    slider_value_label3 = ctk.CTkLabel(home_frame, text="0")
+    slider_value_label3.place(x=570, y=540)
 
     slider.set(slider_value_led2)
     slider2.set(slider_value2_led2)
+    slider3.set(slider_value3_led2)
     on_time_combobox.set(f"{selected_on_hour_led2:02d}h")
     off_time_combobox.set(f"{selected_off_hour_led2:02d}h")
     slider_value_label.configure(text=f"{slider_value_led2} Hours")
