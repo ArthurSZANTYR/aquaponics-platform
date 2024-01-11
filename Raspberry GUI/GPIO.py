@@ -11,10 +11,12 @@ led1Pin = 13
 led2Pin = 3
 led3Pin = 4
 pompePin = 26
+tdsPin = 24
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setup([led1Pin, led2Pin, led3Pin, pompePin], GPIO.OUT)
+GPIO.setup([tdsPin], GPIO.IN)
 
 # Création des objets PWM pour chaque LED
 pwm_led1 = GPIO.PWM(led1Pin, 1000)  # Fréquence de 1000 Hz
@@ -25,6 +27,10 @@ pwm_led3 = GPIO.PWM(led3Pin, 1000)
 pwm_led1.start(0)
 pwm_led2.start(0)
 pwm_led3.start(0)
+
+#TDS setup
+VREF = 5.0
+ADC_RESOLUTION = 1024.0
 
 
 def set_led_intensity(led_pwm, intensity):
@@ -61,6 +67,14 @@ def check_pompe_status(time_on, time_off):
     else:
         GPIO.output(pompePin, GPIO.LOW)
         return "Pompe: GPIO LOW"
+    
+def read_tds():
+    analog_value = GPIO.input(tdsPin)
+    voltage = analog_value /ADC_RESOLUTION*VREF
+
+    tds_value = voltage #a modifiere ceci est faut 
+
+    return tds_value
 
 try:
     while True:
@@ -92,8 +106,12 @@ try:
         # Gestion de la pompe
         print(check_pompe_status(time_on_pompe, time_off_pompe))
 
+        # Gestion TDS
+        tds = read_tds()
+        print(f"TDS : {tds}")
+
         # Délai avant la prochaine vérification
-        time.sleep(5)  # Pause de 30 secondes
+        time.sleep(5)  # Pause de 5 secondes
 
 except KeyboardInterrupt:
     pwm_led1.stop()
