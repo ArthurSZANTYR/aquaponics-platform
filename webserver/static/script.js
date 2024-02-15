@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchDataAndUpdateUI() {
-    fetch('./data.json') // Assurez-vous que le chemin vers data.json est correct
+    fetch('../data.json') // Assurez-vous que le chemin vers data.json est correct
         .then(response => response.json())
         .then(data => {
             document.querySelector('.temperature .middle .left h1').innerText = `${data.temperature}°C`;
