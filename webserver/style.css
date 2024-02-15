@@ -145,6 +145,10 @@ aside .logo img{
     height: 2rem;
 }
 
+aside .close{
+    display: yes;
+}
+
 /* ---------------- SIDEBAR -------------- */
 aside .sidebar{
     background: white;
@@ -253,6 +257,22 @@ main .insights small{
     display: block;
 }
 
+/* ======================== RIGHT =============== */
+.right{
+    margin-top: 1.4rem;
+}
+
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+}
+
+.right .top button {
+    display: none;
+    background-color: var(--color-background);
+}
+
 /* ---------------- MEDIA QUERIES ----------------- */
 @media screen and (max-width: 1200px) {
     .container{
@@ -276,6 +296,7 @@ main .insights small{
         grid-template-columns: 1fr;
         gap: 0;
     }    
+    
 }
 
 @media screen and (max-width: 768px){
@@ -314,7 +335,8 @@ main .insights small{
     }
 
     aside .close{
-        display: none;
+        display: inline-block;
+        cursor: pointer;
     }
 
     main{
@@ -322,7 +344,39 @@ main .insights small{
         padding: 0 1rem;
     }
 
+    .right {
+        width: 94%;
+        margin: 0 auto 4rem;
+    }
+
+    .right .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        padding: 0 0.8rem;
+        height: 4.6rem;
+        background: var(--color-white);
+        width: 100%;
+        margin: 0;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--color-light);
+    }
+
+    .right .top button {
+        display: inline-block;
+        background: transparent;
+        cursor: pointer;
+        color: var(--color-dark);
+        position: absolute;
+        left: 1rem;
+    }
+
+    .right .top .button span{
+        font-size: 2rem;
+    }
 }
+
 
 
 
