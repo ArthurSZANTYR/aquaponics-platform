@@ -21,7 +21,7 @@ def read_pump1_values():
         pump1OnValue = data.get('pump1OnValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
         pump1OffValue = data.get('pump1OffValue', 0)
         
-    return pump1OnValue, pump1OffValue
+    return int(pump1OnValue), int(pump1OffValue)
 
 def pump1_status():
     time_on, time_off = read_pump1_values()
