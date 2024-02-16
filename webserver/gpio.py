@@ -32,6 +32,12 @@ ADC_RESOLUTION = 1024.0
 # Chemin du fichier JSON
 fichier_json = 'data.json'
 
+def read_pump_interval():
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        return int(data.get('pumpInterval', 0))  # Utilisez une valeur par défaut de 0 si non trouvé
+
+
 def set_led_intensity(led_pwm, intensity):
     # Convertir la valeur d'intensité (0-10) en pourcentage (0-100)
     duty_cycle = intensity * 10
@@ -45,6 +51,10 @@ def read_tds():
 
 try:
     while True:
+        #pump control by user
+        pump_interval = read_pump_interval()
+
+
         # Gestion TDS (exemple)
         tds = read_tds()
         print(f"TDS : {tds}")

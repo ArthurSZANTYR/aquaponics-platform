@@ -41,13 +41,13 @@ function fetchDataAndUpdateUI() {
 }
 
 ///////////////// USER DATA /////////////////////////////
-const pumpSlider = document.getElementById('pump-slider');
-const pumpValueDisplay = document.getElementById('pump-value');
+const pump1OnSlider = document.getElementById('pump1-on-slider');
+const pump1OnValueDisplay = document.getElementById('pump1-on-value');
 
 
-document.getElementById('pump-slider').addEventListener('input', function() {
-    const pumpValue = this.value;
-    document.getElementById('pump-value').innerText = `${pumpValue} min`; // Affiche la valeur actuelle du slider
+document.getElementById('pump1-on-slider').addEventListener('input', function() {
+    const pump1OnValue = this.value;
+    document.getElementById('pump1-on-value').innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
 
     // Envoie la nouvelle valeur au serveur
     fetch('/update-pump-interval', {
@@ -55,9 +55,33 @@ document.getElementById('pump-slider').addEventListener('input', function() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pumpInterval: pumpValue }),
+        body: JSON.stringify({ pump1OnValue: pump1OnValue }),
     })
     .then(response => response.json())
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
 });
+
+
+const pump1OffSlider = document.getElementById('pump1-off-slider');
+const pump1OffValueDisplay = document.getElementById('pump1-off-value');
+
+
+document.getElementById('pump1-off-slider').addEventListener('input', function() {
+    const pump1OffValue = this.value;
+    document.getElementById('pump1-off-value').innerText = `${pump1OffValue} min`; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-pump-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pump1OffValue: pump1OffValue }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
+
+

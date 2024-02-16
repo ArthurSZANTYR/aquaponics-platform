@@ -1,5 +1,6 @@
 {
     "temperature": 57,
     "tds": 453,
-    "pumpInterval": "0"
+    "pump1OnValue": "6",
+    "pump1OffValue": "3"
 }

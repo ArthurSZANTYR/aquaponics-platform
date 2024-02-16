@@ -50,30 +50,35 @@
                     <span class="material-icons">tune</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Pump Control</h3>
-                            <h1 id="pump-value">5 min</h1>
+                            <h3>Pump ON Control</h3>
+                            <h1 id="pump1-on-value">5 min</h1>
                             <div class="slider">
                                 <h5 class="text-muted">0</h5>
-                                <input type="range" id="pump-slider" min="0" max="10" value="5">
+                                <input type="range" id="pump1-on-slider" min="0" max="10" value="5">
                                 <h5 class="text-muted">10</h5>
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Adjust pump interval</small>
+                    <small class="text-muted">Adjust pump time ON</small>
                 </div>
-                <!-------------END OF SLIDER------------->
+                <!-------------END OF SLIDER 1------------->
 
-                <div class="tds">
-                    <span class="material-icons">outlet</span>
+                <div class="pump-control">
+                    <span class="material-icons">tune</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Actual TDS</h3>
-                            <h1>386ppm</h1>
+                            <h3>Pump OFF Control</h3>
+                            <h1 id="pump1-off-value">5 min</h1>
+                            <div class="slider">
+                                <h5 class="text-muted">0</h5>
+                                <input type="range" id="pump1-off-slider" min="0" max="10" value="5">
+                                <h5 class="text-muted">10</h5>
+                            </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last minute</small>
+                    <small class="text-muted">Adjust pump time OFF</small>
                 </div>
-                <!-------------END OF TDS------------->
+                <!-------------END OF SLIDER 2------------->
 
             </div>
         </main>
