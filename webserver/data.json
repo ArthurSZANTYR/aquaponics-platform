@@ -1,4 +1,5 @@
 {
     "temperature": 57,
-    "tds": 453
-  }
+    "tds": 453,
+    "pumpInterval": "0"
+}

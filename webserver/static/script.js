@@ -39,3 +39,25 @@ function fetchDataAndUpdateUI() {
             document.querySelector('.tds .middle .left h1').innerText = `${data.tds}ppm`;
         })
 }
+
+///////////////// USER DATA /////////////////////////////
+const pumpSlider = document.getElementById('pump-slider');
+const pumpValueDisplay = document.getElementById('pump-value');
+
+
+document.getElementById('pump-slider').addEventListener('input', function() {
+    const pumpValue = this.value;
+    document.getElementById('pump-value').innerText = `${pumpValue} min`; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-pump-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pumpInterval: pumpValue }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
