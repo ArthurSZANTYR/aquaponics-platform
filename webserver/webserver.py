@@ -7,6 +7,13 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+@app.route('/index.html')
+def dashboard():
+    return render_template('index.html')
+
+@app.route('/pump1.html')
+def pump():
+    return render_template('pump1.html')
 
 @app.route('/data.json')
 def data_json():
