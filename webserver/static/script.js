@@ -16,6 +16,7 @@ closeBtn.addEventListener('click', () =>{
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchDataAndUpdateUI();
+    setInterval(fetchDataAndUpdateUI, 5000); // Rafraîchit les données toutes les 5 secondes
 });
 
 function fetchDataAndUpdateUI() {
