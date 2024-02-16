@@ -27,11 +27,11 @@
             </div>
 
             <div class="sidebar">
-                <a href="#" id="dashboard-btn" class="active">
+                <a href="#" id="dashboard-btn">
                     <span class="material-icons">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="#" id="pump-btn">
+                <a href="#" id="pump-btn" class="active">
                     <span class="material-icons">heat_pump</span>
                     <h3>Pump management</h3>
                 </a>
@@ -43,20 +43,25 @@
         </aside>
         <!-------------------END OF ASIDE---------------------------->
         <main>
-            <h1>Dashboard</h1>
+            <h1>Pump Management</h1>
 
             <div class="insights">
-                <div class="temperature">
-                    <span class="material-icons">thermostat</span>
+                <div class="pump-control">
+                    <span class="material-icons">tune</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Actual Temperature</h3>
-                            <h1>19°C</h1>
+                            <h3>Pump Control</h3>
+                            <h1 id="pump-value">5 min</h1>
+                            <div class="slider">
+                                <h5 class="text-muted">0</h5>
+                                <input type="range" id="pump-slider" min="0" max="10" value="5">
+                                <h5 class="text-muted">10</h5>
+                            </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last minute</small>
+                    <small class="text-muted">Adjust pump interval</small>
                 </div>
-                <!-------------END OF TEMPERATURE------------->
+                <!-------------END OF SLIDER------------->
 
                 <div class="tds">
                     <span class="material-icons">outlet</span>

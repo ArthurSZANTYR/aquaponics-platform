@@ -3,6 +3,9 @@
 const sideMenu = document.querySelector("aside");
 const menuBtn = document.querySelector("#menu-btn");
 const closeBtn = document.querySelector("#close-btn");
+const pumpBtn = document.querySelector("#pump-btn"); 
+const dashboardBtn = document.querySelector("#dashboard-btn"); 
+
 
 menuBtn.addEventListener('click', () =>{
     sideMenu.style.display = 'block';
@@ -11,6 +14,15 @@ menuBtn.addEventListener('click', () =>{
 closeBtn.addEventListener('click', () =>{
     sideMenu.style.display = 'none';
 })
+
+pumpBtn.addEventListener('click', () => {
+    window.location.href = 'pump1.html'; // Redirige vers pump1.html
+});
+
+dashboardBtn.addEventListener('click', () => {
+    window.location.href = 'index.html'; 
+});
+
 
 //////////////////  DATA LOAD  ////////////////////////////
 

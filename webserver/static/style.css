@@ -257,6 +257,29 @@ main .insights small{
     display: block;
 }
 
+.insights .slider{
+    align-items: center;
+}
+
+.pump-control .slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 120%; 
+}
+
+#pump-slider {
+    width: 100%; 
+    margin: 0 10px; 
+    height: 8px;
+    background: var(--color-info-light);
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+
+
+
 /* ======================== RIGHT =============== */
 .right{
     margin-top: 1.4rem;
