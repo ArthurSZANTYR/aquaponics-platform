@@ -8,6 +8,7 @@ pump1Pin = 26
 tdsPin = 24
 
 # GPIO setup
+GPIO.setmode(GPIO.BCM)
 GPIO.setup([tdsPin], GPIO.IN)
 GPIO.setup([pump1Pin], GPIO.OUT)
 
