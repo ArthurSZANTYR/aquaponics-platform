@@ -32,12 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchDataAndUpdateUI() {
-    fetch('../data.json') // Assurez-vous que le chemin vers data.json est correct
+    fetch('../data.json') 
         .then(response => response.json())
         .then(data => {
-            document.querySelector('.temperature .middle .left h1').innerText = `${data.temperature}°C`;
-            document.querySelector('.tds .middle .left h1').innerText = `${data.tds}ppm`;
+            const fromSystem = data.fromSystem || {}; // Fournit un objet vide par défaut
+            const temperature = fromSystem.temperature || 'N/A'; // Utilise 'N/A' comme valeur par défaut
+            const tds = fromSystem.tds || 'N/A';
+
+            // Mise à jour de l'interface utilisateur avec les nouvelles valeurs
+            document.querySelector('.temperature .middle .left h1').innerText = `${temperature}°C`;
+            document.querySelector('.tds .middle .left h1').innerText = `${tds}ppm`;
         })
+        .catch(error => console.error('Error fetching data:', error)); // Gestion des erreurs
 }
 
 ///////////////// USER DATA /////////////////////////////
@@ -55,7 +61,7 @@ document.getElementById('pump1-on-slider').addEventListener('input', function() 
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pump1OnValue: pump1OnValue }),
+        body: JSON.stringify({ fromUser: { pump1OnValue: pump1OnValue }}),
     })
     .then(response => response.json())
     .then(data => console.log('Success:', data))
@@ -77,7 +83,7 @@ document.getElementById('pump1-off-slider').addEventListener('input', function()
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pump1OffValue: pump1OffValue }),
+        body: JSON.stringify({ fromUser: { pump1OffValue: pump1OffValue }}),
     })
     .then(response => response.json())
     .then(data => console.log('Success:', data))

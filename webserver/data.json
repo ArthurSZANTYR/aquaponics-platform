@@ -1,6 +1,10 @@
 {
-    "temperature": 57,
-    "tds": 453,
-    "pump1OnValue": "6",
-    "pump1OffValue": "3"
+    "fromSystem": {
+        "temperature": 57,
+        "tds": 453
+    },
+    "fromUser": {
+        "pump1OnValue": "6",
+        "pump1OffValue": "9"
+    }
 }

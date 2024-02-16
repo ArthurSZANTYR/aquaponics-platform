@@ -18,8 +18,9 @@ fichier_json = 'data.json'
 def read_pump1_values():    
     with open(fichier_json, 'r') as file:
         data = json.load(file)
-        pump1OnValue = data.get('pump1OnValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
-        pump1OffValue = data.get('pump1OffValue', 0)
+        fromUser = data.get('fromUser', {})
+        pump1OnValue = fromUser.get('pump1OnValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
+        pump1OffValue = fromUser.get('pump1OffValue', 0)
         
     return int(pump1OnValue), int(pump1OffValue)
 
@@ -45,6 +46,16 @@ def read_tds():
     #tds_value = voltage 
     return analog_value
 
+def update_system_data(temperature, tds):
+    with open(fichier_json, 'r+') as file:
+        data = json.load(file)
+        data['fromSystem']['temperature'] = temperature
+        data['fromSystem']['tds'] = tds
+        
+        file.seek(0)
+        json.dump(data, file, indent=4)
+        file.truncate()
+
 
 try:
     while True:
@@ -58,16 +69,9 @@ try:
         # Gestion de la température (exemple)
         temperature = 25  # Remplacer par une vraie lecture de température
 
-        # Écriture dans le fichier JSON
-        data = {
-            "temperature": temperature,
-            "tds": tds
-        }
-        
-        with open(fichier_json, 'w') as f:
-            json.dump(data, f)
-        
-        print(f"Écriture dans {fichier_json}: {data}")
+        update_system_data(temperature, tds)
+        print("Mise à jour des données environnementales dans data.json")
+
 
         # Délai avant la prochaine vérification
         time.sleep(5)  # Pause de 5 secondes
