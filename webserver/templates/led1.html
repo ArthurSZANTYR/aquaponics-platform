@@ -31,11 +31,11 @@
                     <span class="material-icons">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="/pump1.html" id="pump-btn" class="active">
+                <a href="/pump1.html" id="pump-btn" >
                     <span class="material-icons">heat_pump</span>
                     <h3>Pump management</h3>
                 </a>
-                <a href="/led1.html" id="led-btn" >
+                <a href="/led1.html" id="led-btn" class="active">
                     <span class="material-icons">light_mode</span>
                     <h3>Led management</h3>
                 </a>
@@ -43,43 +43,25 @@
         </aside>
         <!-------------------END OF ASIDE---------------------------->
         <main>
-            <h1>Pump Management</h1>
+            <h1>Led Management</h1>
 
             <div class="insights">
-                <div class="pump-control">
+                <div class="led1-panel">
                     <span class="material-icons">tune</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Pump ON Control</h3>
-                            <h1 id="pump1-on-value">5 min</h1>
+                            <h3>Led Intensity Control</h3>
+                            <h1 id="led1-intensity-value">5</h1>
                             <div class="slider">
                                 <h5 class="text-muted">0</h5>
-                                <input type="range" id="pump1-on-slider" min="0" max="10" value="5">
+                                <input type="range" id="led1-intensity-slider" min="0" max="10" value="5">
                                 <h5 class="text-muted">10</h5>
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Adjust pump time ON</small>
+                    <small class="text-muted">Adjust led intensity</small>
                 </div>
                 <!-------------END OF SLIDER 1------------->
-
-                <div class="pump-control">
-                    <span class="material-icons">tune</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Pump OFF Control</h3>
-                            <h1 id="pump1-off-value">5 min</h1>
-                            <div class="slider">
-                                <h5 class="text-muted">0</h5>
-                                <input type="range" id="pump1-off-slider" min="0" max="10" value="5">
-                                <h5 class="text-muted">10</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <small class="text-muted">Adjust pump time OFF</small>
-                </div>
-                <!-------------END OF SLIDER 2------------->
-
             </div>
         </main>
         <!--------------END OF MAIN----------------------->

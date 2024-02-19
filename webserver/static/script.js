@@ -4,6 +4,7 @@ const sideMenu = document.querySelector("aside");
 const menuBtn = document.querySelector("#menu-btn");
 const closeBtn = document.querySelector("#close-btn");
 const pumpBtn = document.querySelector("#pump-btn"); 
+const ledBtn = document.querySelector("#led-btn"); 
 const dashboardBtn = document.querySelector("#dashboard-btn"); 
 
 
@@ -21,6 +22,10 @@ pumpBtn.addEventListener('click', () => {
 
 dashboardBtn.addEventListener('click', () => {
     window.location.href = 'index.html'; 
+});
+
+ledBtn.addEventListener('click', () => {
+    window.location.href = 'led1.html'; 
 });
 
 
@@ -89,5 +94,27 @@ document.getElementById('pump1-off-slider').addEventListener('input', function()
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
 });
+
+const led1IntensitySlider = document.getElementById('led1-intensity-slider');
+const led1IntensityValueDisplay = document.getElementById('led1-intensity-value');
+
+
+document.getElementById('led1-intensity-slider').addEventListener('input', function() {
+    const led1IntensityValue = this.value;
+    document.getElementById('led1-intensity-value').innerText = led1IntensityValue; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-led-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fromUser: { led1IntensityValue: led1IntensityValue }}),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
+
 
 

@@ -16,6 +16,10 @@ def dashboard():
 def pump():
     return render_template('pump1.html')
 
+@app.route('/led1.html')
+def led():
+    return render_template('led1.html')
+
 @app.route('/data.json')
 def data_json():
     return send_from_directory(os.getcwd(), 'data.json')
@@ -42,6 +46,32 @@ def update_pump_interval():
         if 'pump1OffValue' in fromUser:
             file_data['fromUser']['pump1OffValue'] = fromUser['pump1OffValue']
         
+        file.seek(0)
+        json.dump(file_data, file, indent=4)
+        file.truncate()  # Supprime le reste du fichier si nécessaire
+
+    return jsonify({'status': 'success'}), 200
+
+@app.route('/update-led-interval', methods=['POST'])
+def update_led_interval():
+    data = request.get_json()
+    print(data)  # Pour le débogage, affiche les données reçues
+
+    # Accéder au sous-objet 'fromUser' pour obtenir les valeurs
+    fromUser = data.get('fromUser', {})
+
+    # Mettre à jour data.json avec les nouvelles valeurs
+    with open('data.json', 'r+') as file:
+        file_data = json.load(file)
+
+        # Assurez-vous que 'fromUser' existe dans file_data, sinon créez-le
+        if 'fromUser' not in file_data:
+            file_data['fromUser'] = {}
+        
+        # Mise à jour des valeurs
+        if 'led1IntensityValue' in fromUser:
+            file_data['fromUser']['led1IntensityValue'] = fromUser['led1IntensityValue']
+
         file.seek(0)
         json.dump(file_data, file, indent=4)
         file.truncate()  # Supprime le reste du fichier si nécessaire
