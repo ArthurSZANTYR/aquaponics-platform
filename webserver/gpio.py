@@ -26,6 +26,8 @@ def read_pump1_values():
 
 def pump1_status():
     time_on, time_off = read_pump1_values()
+    time_on *= 60
+    time_off *= 60
 
     now = datetime.datetime.now()
     
