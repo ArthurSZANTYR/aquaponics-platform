@@ -37,7 +37,7 @@
                 </a>
                 <a href="/led1.html" id="led-btn" >
                     <span class="material-icons">light_mode</span>
-                    <h3>Led management</h3>
+                    <h3>Led n°1 management</h3>
                 </a>
                 <a href="/led2.html" id="led2-btn" class="active">
                     <span class="material-icons">light_mode</span>
@@ -66,7 +66,21 @@
                     <small class="text-muted">Adjust led intensity</small>
                 </div>
                 <!-------------END OF SLIDER 1------------->
-              
+                <div class="led-panel">
+                    <span class="material-icons">tune</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Led ON hour</h3>
+                            <h1 id="led2-ON-value">5</h1>
+                            <div class="slider">
+                                <h5 class="text-muted">0</h5>
+                                <input type="range" id="led2-ON-slider" min="0" max="24" value="5">
+                                <h5 class="text-muted">24</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Adjust led ON time per day</small>
+                </div>
                 <!-------------END OF SLIDER 2------------->
             </div>
         </main>

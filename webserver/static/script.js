@@ -152,5 +152,53 @@ led2IntensitySlider.addEventListener('input', function() {
 
 }
 
+const led1OnSlider = document.getElementById('led1-ON-slider');
+const led1OnValueDisplay = document.getElementById('led1-ON-value');
+
+if(led1OnSlider != null) {
+    led1OnSlider.addEventListener('input', function() {
+    const led1OnValue = this.value;
+    led1OnValueDisplay.innerText = led1OnValue; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-led-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fromUser: { led1OnValue: led1OnValue }}),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
+
+}
+
+const led2OnSlider = document.getElementById('led2-ON-slider');
+const led2OnValueDisplay = document.getElementById('led2-ON-value');
+
+if(led2OnSlider != null) {
+    led2OnSlider.addEventListener('input', function() {
+    const led2OnValue = this.value;
+    led2OnValueDisplay.innerText = led2OnValue; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-led-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fromUser: { led2OnValue: led2OnValue }}),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
+
+}
+
+
+
 
 

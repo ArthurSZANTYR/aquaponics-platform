@@ -77,6 +77,10 @@ def update_led_interval():
             file_data['fromUser']['led1IntensityValue'] = fromUser['led1IntensityValue']
         if 'led2IntensityValue' in fromUser:
             file_data['fromUser']['led2IntensityValue'] = fromUser['led2IntensityValue']
+        if 'led1OnValue' in fromUser:
+            file_data['fromUser']['led1OnValue'] = fromUser['led1OnValue']
+        if 'led2OnValue' in fromUser:
+            file_data['fromUser']['led2OnValue'] = fromUser['led2OnValue']
 
         file.seek(0)
         json.dump(file_data, file, indent=4)
