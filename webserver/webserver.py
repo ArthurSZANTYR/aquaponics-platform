@@ -24,14 +24,6 @@ def led1():
 def led2():
     return render_template('led2.html')
 
-@app.route('/test.html')
-def test():
-    return render_template('test.html')
-
-@app.route('/pump2.html')
-def pump2():
-    return render_template('pump2.html')
-
 @app.route('/data.json')
 def data_json():
     return send_from_directory(os.getcwd(), 'data.json')

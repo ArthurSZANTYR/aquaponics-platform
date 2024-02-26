@@ -5,6 +5,8 @@ const menuBtn = document.querySelector("#menu-btn");
 const closeBtn = document.querySelector("#close-btn");
 const pumpBtn = document.querySelector("#pump-btn"); 
 const ledBtn = document.querySelector("#led-btn"); 
+const led2Btn = document.querySelector("#led2-btn"); 
+
 const dashboardBtn = document.querySelector("#dashboard-btn"); 
 
 
@@ -27,6 +29,11 @@ dashboardBtn.addEventListener('click', () => {
 ledBtn.addEventListener('click', () => {
     window.location.href = 'led1.html'; 
 });
+
+led2Btn.addEventListener('click', () => {
+    window.location.href = 'led2.html'; 
+});
+
 
 
 //////////////////  DATA LOAD  ////////////////////////////
@@ -114,6 +121,29 @@ led1IntensitySlider.addEventListener('input', function() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ fromUser: { led1IntensityValue: led1IntensityValue }}),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+});
+
+}
+
+const led2IntensitySlider = document.getElementById('led2-intensity-slider');
+const led2IntensityValueDisplay = document.getElementById('led2-intensity-value');
+
+if(led2IntensitySlider != null) {
+led2IntensitySlider.addEventListener('input', function() {
+    const led2IntensityValue = this.value;
+    led2IntensityValueDisplay.innerText = led2IntensityValue; // Affiche la valeur actuelle du slider
+
+    // Envoie la nouvelle valeur au serveur
+    fetch('/update-led-interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fromUser: { led2IntensityValue: led2IntensityValue }}),
     })
     .then(response => response.json())
     .then(data => console.log('Success:', data))
