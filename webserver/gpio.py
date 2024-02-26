@@ -57,11 +57,23 @@ def read_tds():
     return analog_value
 
 
-def read_led1_value():    
+def read_led1_intensity():    
     with open(fichier_json, 'r') as file:
         data = json.load(file)
         fromUser = data.get('fromUser', {})
         led1IntensityValue = fromUser.get('led1IntensityValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
+
+def read_led1_start_hour():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led1IntensityValue = fromUser.get('led1StartValue', 0)
+
+def read_led1_on_time():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led1IntensityValue = fromUser.get('led1OnValue', 0)
 
     return int(led1IntensityValue)
 
@@ -69,6 +81,19 @@ def set_led_intensity(led_pwm, intensity):
     # Convertir la valeur d'intensité (0-10) en pourcentage (0-100)
     duty_cycle = intensity * 10
     led_pwm.ChangeDutyCycle(duty_cycle)
+
+def update_led_status(start_hour, on_time, led_pwm, intensity):
+    # Obtenir l'heure actuelle sous forme d'entier
+    now_hour = datetime.datetime.now().hour
+    print(now_hour)
+    print(start_hour)
+    print(start_hour + on_time)
+
+    # Vérifier si l'heure actuelle est dans le bon créneau
+    if start_hour <= now_hour < start_hour + on_time:
+        set_led_intensity(led_pwm, intensity)
+    else:
+        set_led_intensity(led_pwm, 0)
 
 def update_system_data(temperature, tds):
     with open(fichier_json, 'r+') as file:
@@ -90,7 +115,7 @@ try:
         tds = read_tds()
         print(f"TDS : {tds}")
 
-        set_led_intensity(pwm_led1, read_led1_value())
+        update_led_status(read_led1_start_hour(), read_led1_on_time, pwm_led1, intensity = read_led1_intensity())
 
         # Gestion de la température (exemple)
         temperature = 25  # Remplacer par une vraie lecture de température
