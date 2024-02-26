@@ -55,32 +55,35 @@ function fetchDataAndUpdateUI() {
 const pump1OnSlider = document.getElementById('pump1-on-slider');
 const pump1OnValueDisplay = document.getElementById('pump1-on-value');
 
+if(pump1OnSlider != null) {
+    pump1OnSlider.addEventListener('input', function() {
+        const pump1OnValue = this.value;
+        pump1OnValueDisplay.innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
+    
+        // Envoie la nouvelle valeur au serveur
+        fetch('/update-pump-interval', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fromUser: { pump1OnValue: pump1OnValue }}),
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+    });    
+}
 
-document.getElementById('pump1-on-slider').addEventListener('input', function() {
-    const pump1OnValue = this.value;
-    document.getElementById('pump1-on-value').innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
 
-    // Envoie la nouvelle valeur au serveur
-    fetch('/update-pump-interval', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ fromUser: { pump1OnValue: pump1OnValue }}),
-    })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch((error) => console.error('Error:', error));
-});
 
 
 const pump1OffSlider = document.getElementById('pump1-off-slider');
 const pump1OffValueDisplay = document.getElementById('pump1-off-value');
 
-
-document.getElementById('pump1-off-slider').addEventListener('input', function() {
+if(pump1OffSlider != null) {
+pump1OffSlider.addEventListener('input', function() {
     const pump1OffValue = this.value;
-    document.getElementById('pump1-off-value').innerText = `${pump1OffValue} min`; // Affiche la valeur actuelle du slider
+    pump1OffValueDisplay.innerText = `${pump1OffValue} min`; // Affiche la valeur actuelle du slider
 
     // Envoie la nouvelle valeur au serveur
     fetch('/update-pump-interval', {
@@ -94,14 +97,15 @@ document.getElementById('pump1-off-slider').addEventListener('input', function()
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
 });
+}
 
 const led1IntensitySlider = document.getElementById('led1-intensity-slider');
 const led1IntensityValueDisplay = document.getElementById('led1-intensity-value');
 
-
-document.getElementById('led1-intensity-slider').addEventListener('input', function() {
+if(led1IntensitySlider != null) {
+led1IntensitySlider.addEventListener('input', function() {
     const led1IntensityValue = this.value;
-    document.getElementById('led1-intensity-value').innerText = led1IntensityValue; // Affiche la valeur actuelle du slider
+    led1IntensityValueDisplay.innerText = led1IntensityValue; // Affiche la valeur actuelle du slider
 
     // Envoie la nouvelle valeur au serveur
     fetch('/update-led-interval', {
@@ -115,6 +119,8 @@ document.getElementById('led1-intensity-slider').addEventListener('input', funct
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
 });
+
+}
 
 
 

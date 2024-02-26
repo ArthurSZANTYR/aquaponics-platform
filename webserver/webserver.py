@@ -17,8 +17,20 @@ def pump():
     return render_template('pump1.html')
 
 @app.route('/led1.html')
-def led():
+def led1():
     return render_template('led1.html')
+
+@app.route('/led2.html')
+def led2():
+    return render_template('led2.html')
+
+@app.route('/test.html')
+def test():
+    return render_template('test.html')
+
+@app.route('/pump2.html')
+def pump2():
+    return render_template('pump2.html')
 
 @app.route('/data.json')
 def data_json():
