@@ -6,6 +6,7 @@
     "fromUser": {
         "pump1OnValue": "3",
         "pump1OffValue": "6",
-        "led1IntensityValue": "7"
+        "led1IntensityValue": "9",
+        "led2IntensityValue": "6"
     }
 }
