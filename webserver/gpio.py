@@ -62,20 +62,21 @@ def read_led1_intensity():
         data = json.load(file)
         fromUser = data.get('fromUser', {})
         led1IntensityValue = fromUser.get('led1IntensityValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
+    return int(led1IntensityValue)
 
 def read_led1_start_hour():    
     with open(fichier_json, 'r') as file:
         data = json.load(file)
         fromUser = data.get('fromUser', {})
-        led1IntensityValue = fromUser.get('led1StartValue', 0)
+        led1StartValue = fromUser.get('led1StartValue', 0)
+    return int(led1StartValue)
 
 def read_led1_on_time():    
     with open(fichier_json, 'r') as file:
         data = json.load(file)
         fromUser = data.get('fromUser', {})
-        led1IntensityValue = fromUser.get('led1OnValue', 0)
-
-    return int(led1IntensityValue)
+        led1OnValue = fromUser.get('led1OnValue', 0)
+    return int(led1OnValue)
 
 def set_led_intensity(led_pwm, intensity):
     # Convertir la valeur d'intensité (0-10) en pourcentage (0-100)
@@ -115,7 +116,7 @@ try:
         tds = read_tds()
         print(f"TDS : {tds}")
 
-        update_led_status(read_led1_start_hour(), read_led1_on_time, pwm_led1, intensity = read_led1_intensity())
+        update_led_status(read_led1_start_hour(), read_led1_on_time(), pwm_led1, intensity = read_led1_intensity())
 
         # Gestion de la température (exemple)
         temperature = 25  # Remplacer par une vraie lecture de température
