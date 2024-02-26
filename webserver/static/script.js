@@ -37,6 +37,9 @@ led2Btn.addEventListener('click', () => {
 
 
 //////////////////  DATA LOAD  ////////////////////////////
+const pump1OnValueDisplay = document.getElementById('pump1-on-value');
+const temperatureValueDisplay = document.getElementById('temperature-value');
+const tdsValueDisplay = document.getElementById('tds-value');
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchDataAndUpdateUI();
@@ -47,25 +50,36 @@ function fetchDataAndUpdateUI() {
     fetch('../data.json') 
         .then(response => response.json())
         .then(data => {
+
+            if(temperatureValueDisplay != null){
+            // Mise à jour de l'interface utilisateur avec les nouvelles valeurs
             const fromSystem = data.fromSystem || {}; // Fournit un objet vide par défaut
             const temperature = fromSystem.temperature || 'N/A'; // Utilise 'N/A' comme valeur par défaut
             const tds = fromSystem.tds || 'N/A';
 
-            // Mise à jour de l'interface utilisateur avec les nouvelles valeurs
-            document.querySelector('.temperature .middle .left h1').innerText = `${temperature}°C`;
-            document.querySelector('.tds .middle .left h1').innerText = `${tds}ppm`;
+            temperatureValueDisplay.innerText = `${temperature}°C`;
+            tdsValueDisplay.innerText = `${tds}ppm`;
+            }
+            
+
+            if(pump1OnValueDisplay != null) {
+                const fromUser = data.fromUser || {};
+                const pump1OnValue = fromUser.pump1OnValue || 'N/A';
+                document.getElementById('pump1-on-value').innerText = `${pump1OnValue} min`;
+            }
+
         })
         .catch(error => console.error('Error fetching data:', error)); // Gestion des erreurs
 }
 
 ///////////////// USER DATA /////////////////////////////
 const pump1OnSlider = document.getElementById('pump1-on-slider');
-const pump1OnValueDisplay = document.getElementById('pump1-on-value');
+//const pump1OnValueDisplay = document.getElementById('pump1-on-value');
 
 if(pump1OnSlider != null) {
     pump1OnSlider.addEventListener('input', function() {
         const pump1OnValue = this.value;
-        pump1OnValueDisplay.innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
+        //pump1OnValueDisplay.innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
     
         // Envoie la nouvelle valeur au serveur
         fetch('/update-pump-interval', {
