@@ -38,6 +38,16 @@ led2Btn.addEventListener('click', () => {
 
 //////////////////  DATA LOAD  ////////////////////////////
 const pump1OnValueDisplay = document.getElementById('pump1-on-value');
+const pump1OffValueDisplay = document.getElementById('pump1-off-value');
+
+const led1IntensityValueDisplay = document.getElementById('led1-intensity-value');
+const led1OnValueDisplay = document.getElementById('led1-ON-value');
+const led1StartValueDisplay = document.getElementById('led1-start-value');
+
+const led2IntensityValueDisplay = document.getElementById('led2-intensity-value');
+const led2OnValueDisplay = document.getElementById('led2-ON-value');
+const led2StartValueDisplay = document.getElementById('led2-start-value');
+
 const temperatureValueDisplay = document.getElementById('temperature-value');
 const tdsValueDisplay = document.getElementById('tds-value');
 
@@ -61,11 +71,35 @@ function fetchDataAndUpdateUI() {
             tdsValueDisplay.innerText = `${tds}ppm`;
             }
             
-
+            const fromUser = data.fromUser || {};
             if(pump1OnValueDisplay != null) {
-                const fromUser = data.fromUser || {};
                 const pump1OnValue = fromUser.pump1OnValue || 'N/A';
-                document.getElementById('pump1-on-value').innerText = `${pump1OnValue} min`;
+                pump1OnValueDisplay.innerText = `${pump1OnValue} min`;
+
+                const pump1OffValue = fromUser.pump1OffValue || 'N/A';
+                pump1OffValueDisplay.innerText = `${pump1OffValue} min`;
+            }
+
+            if(led1IntensityValueDisplay != null) {
+                const led1IntensityValue = fromUser.led1IntensityValue || 'N/A';
+                led1IntensityValueDisplay.innerText = `${led1IntensityValue}`;
+
+                const led1OnValue = fromUser.led1OnValue || 'N/A';
+                led1OnValueDisplay.innerText = `${led1OnValue}`;
+
+                const led1StartValue = fromUser.led1StartValue || 'N/A';
+                led1StartValueDisplay.innerText = `${led1StartValue}`;
+            }
+
+            if(led2IntensityValueDisplay != null) {
+                const led2IntensityValue = fromUser.led2IntensityValue || 'N/A';
+                led2IntensityValueDisplay.innerText = `${led2IntensityValue}`;
+
+                const led2OnValue = fromUser.led2OnValue || 'N/A';
+                led2OnValueDisplay.innerText = `${led2OnValue}`;
+
+                const led2StartValue = fromUser.led2StartValue || 'N/A';
+                led2StartValueDisplay.innerText = `${led2StartValue}`;
             }
 
         })
@@ -79,7 +113,7 @@ const pump1OnSlider = document.getElementById('pump1-on-slider');
 if(pump1OnSlider != null) {
     pump1OnSlider.addEventListener('input', function() {
         const pump1OnValue = this.value;
-        //pump1OnValueDisplay.innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
+        pump1OnValueDisplay.innerText = `${pump1OnValue} min`; // Affiche la valeur actuelle du slider
     
         // Envoie la nouvelle valeur au serveur
         fetch('/update-pump-interval', {
@@ -99,7 +133,6 @@ if(pump1OnSlider != null) {
 
 
 const pump1OffSlider = document.getElementById('pump1-off-slider');
-const pump1OffValueDisplay = document.getElementById('pump1-off-value');
 
 if(pump1OffSlider != null) {
 pump1OffSlider.addEventListener('input', function() {
@@ -121,7 +154,6 @@ pump1OffSlider.addEventListener('input', function() {
 }
 
 const led1IntensitySlider = document.getElementById('led1-intensity-slider');
-const led1IntensityValueDisplay = document.getElementById('led1-intensity-value');
 
 if(led1IntensitySlider != null) {
 led1IntensitySlider.addEventListener('input', function() {
@@ -144,7 +176,6 @@ led1IntensitySlider.addEventListener('input', function() {
 }
 
 const led2IntensitySlider = document.getElementById('led2-intensity-slider');
-const led2IntensityValueDisplay = document.getElementById('led2-intensity-value');
 
 if(led2IntensitySlider != null) {
 led2IntensitySlider.addEventListener('input', function() {
@@ -167,7 +198,6 @@ led2IntensitySlider.addEventListener('input', function() {
 }
 
 const led1OnSlider = document.getElementById('led1-ON-slider');
-const led1OnValueDisplay = document.getElementById('led1-ON-value');
 
 if(led1OnSlider != null) {
     led1OnSlider.addEventListener('input', function() {
@@ -190,7 +220,6 @@ if(led1OnSlider != null) {
 }
 
 const led2OnSlider = document.getElementById('led2-ON-slider');
-const led2OnValueDisplay = document.getElementById('led2-ON-value');
 
 if(led2OnSlider != null) {
     led2OnSlider.addEventListener('input', function() {
@@ -213,7 +242,6 @@ if(led2OnSlider != null) {
 }
 
 const led1StartSlider = document.getElementById('led1-start-slider');
-const led1StartValueDisplay = document.getElementById('led1-start-value');
 
 if(led1StartSlider != null) {
     led1StartSlider.addEventListener('input', function() {
@@ -236,7 +264,7 @@ if(led1StartSlider != null) {
 }
 
 const led2StartSlider = document.getElementById('led2-start-slider');
-const led2StartValueDisplay = document.getElementById('led2-start-value');
+
 
 if(led2StartSlider != null) {
     led2StartSlider.addEventListener('input', function() {
