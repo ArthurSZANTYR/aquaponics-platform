@@ -7,18 +7,22 @@ import json  # Importer le module json
 pump1Pin = 26
 tdsPin = 24
 led1Pin = 13
+led2Pin = 12
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setup([tdsPin], GPIO.IN)
 GPIO.setup([pump1Pin], GPIO.OUT)
 GPIO.setup([led1Pin], GPIO.OUT)
+GPIO.setup([led2Pin], GPIO.OUT)
 
 # Création des objets PWM pour chaque LED
 pwm_led1 = GPIO.PWM(led1Pin, 1000)  # Fréquence de 1000 Hz
+pwm_led2 = GPIO.PWM(led2Pin, 1000)
 
 # Démarrage des PWM avec un duty cycle de 0 (LED éteinte)
 pwm_led1.start(0)
+pwm_led2.start(0)
 
 # Chemin du fichier JSON
 fichier_json = 'data.json'
@@ -78,6 +82,27 @@ def read_led1_on_time():
         led1OnValue = fromUser.get('led1OnValue', 0)
     return int(led1OnValue)
 
+def read_led2_intensity():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led2IntensityValue = fromUser.get('led2IntensityValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
+    return int(led2IntensityValue)
+
+def read_led2_start_hour():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led2StartValue = fromUser.get('led2StartValue', 0)
+    return int(led2StartValue)
+
+def read_led2_on_time():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led2OnValue = fromUser.get('led2OnValue', 0)
+    return int(led2OnValue)
+
 def set_led_intensity(led_pwm, intensity):
     # Convertir la valeur d'intensité (0-10) en pourcentage (0-100)
     duty_cycle = intensity * 10
@@ -117,6 +142,7 @@ try:
         print(f"TDS : {tds}")
 
         update_led_status(read_led1_start_hour(), read_led1_on_time(), pwm_led1, intensity = read_led1_intensity())
+        update_led_status(read_led2_start_hour(), read_led2_on_time(), pwm_led2, intensity = read_led2_intensity())
 
         # Gestion de la température (exemple)
         temperature = 25  # Remplacer par une vraie lecture de température
