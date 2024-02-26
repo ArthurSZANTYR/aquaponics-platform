@@ -9,6 +9,8 @@
         "led1IntensityValue": "9",
         "led2IntensityValue": "6",
         "led1OnValue": "14",
-        "led2OnValue": "19"
+        "led2OnValue": "19",
+        "led1StartValue": "16",
+        "led2StartValue": "11"
     }
 }
