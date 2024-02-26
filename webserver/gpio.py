@@ -6,11 +6,19 @@ import json  # Importer le module json
 # Pins Setup
 pump1Pin = 26
 tdsPin = 24
+led1Pin = 13
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setup([tdsPin], GPIO.IN)
 GPIO.setup([pump1Pin], GPIO.OUT)
+GPIO.setup([led1Pin], GPIO.OUT)
+
+# Création des objets PWM pour chaque LED
+pwm_led1 = GPIO.PWM(led1Pin, 1000)  # Fréquence de 1000 Hz
+
+# Démarrage des PWM avec un duty cycle de 0 (LED éteinte)
+pwm_led1.start(0)
 
 # Chemin du fichier JSON
 fichier_json = 'data.json'
@@ -48,6 +56,20 @@ def read_tds():
     #tds_value = voltage 
     return analog_value
 
+
+def read_led1_value():    
+    with open(fichier_json, 'r') as file:
+        data = json.load(file)
+        fromUser = data.get('fromUser', {})
+        led1IntensityValue = fromUser.get('led1IntensityValue', 0)  # 0 est une valeur par défaut si la clé n'existe pas
+
+    return int(led1IntensityValue)
+
+def set_led_intensity(led_pwm, intensity):
+    # Convertir la valeur d'intensité (0-10) en pourcentage (0-100)
+    duty_cycle = intensity * 10
+    led_pwm.ChangeDutyCycle(duty_cycle)
+
 def update_system_data(temperature, tds):
     with open(fichier_json, 'r+') as file:
         data = json.load(file)
@@ -67,6 +89,8 @@ try:
         # Gestion TDS (exemple)
         tds = read_tds()
         print(f"TDS : {tds}")
+
+        set_led_intensity(pwm_led1, read_led1_value())
 
         # Gestion de la température (exemple)
         temperature = 25  # Remplacer par une vraie lecture de température
