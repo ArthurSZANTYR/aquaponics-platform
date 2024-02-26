@@ -37,13 +37,21 @@ led2Btn.addEventListener('click', () => {
 
 
 //////////////////  DATA LOAD  ////////////////////////////
+const pump1OnSlider = document.getElementById('pump1-on-slider');
+const pump1OffSlider = document.getElementById('pump1-off-slider');
 const pump1OnValueDisplay = document.getElementById('pump1-on-value');
 const pump1OffValueDisplay = document.getElementById('pump1-off-value');
 
+const led1IntensitySlider = document.getElementById('led1-intensity-slider');
+const led1OnSlider = document.getElementById('led1-ON-slider');
+const led1StartSlider = document.getElementById('led1-start-slider');
 const led1IntensityValueDisplay = document.getElementById('led1-intensity-value');
 const led1OnValueDisplay = document.getElementById('led1-ON-value');
 const led1StartValueDisplay = document.getElementById('led1-start-value');
 
+const led2IntensitySlider = document.getElementById('led2-intensity-slider');
+const led2OnSlider = document.getElementById('led2-ON-slider');
+const led2StartSlider = document.getElementById('led2-start-slider');
 const led2IntensityValueDisplay = document.getElementById('led2-intensity-value');
 const led2OnValueDisplay = document.getElementById('led2-ON-value');
 const led2StartValueDisplay = document.getElementById('led2-start-value');
@@ -74,31 +82,39 @@ function fetchDataAndUpdateUI() {
             const fromUser = data.fromUser || {};
             if(pump1OnValueDisplay != null) {
                 const pump1OnValue = fromUser.pump1OnValue || 'N/A';
+                pump1OnSlider.value = pump1OnValue;
                 pump1OnValueDisplay.innerText = `${pump1OnValue} min`;
 
                 const pump1OffValue = fromUser.pump1OffValue || 'N/A';
+                pump1OffSlider.value = pump1OffValue;
                 pump1OffValueDisplay.innerText = `${pump1OffValue} min`;
             }
 
             if(led1IntensityValueDisplay != null) {
                 const led1IntensityValue = fromUser.led1IntensityValue || 'N/A';
+                led1IntensitySlider.value = led1IntensityValue;
                 led1IntensityValueDisplay.innerText = `${led1IntensityValue}`;
 
                 const led1OnValue = fromUser.led1OnValue || 'N/A';
+                led1OnSlider.value = led1OnValue;
                 led1OnValueDisplay.innerText = `${led1OnValue}`;
 
                 const led1StartValue = fromUser.led1StartValue || 'N/A';
+                led1StartSlider.value = led1StartValue;
                 led1StartValueDisplay.innerText = `${led1StartValue}`;
             }
 
             if(led2IntensityValueDisplay != null) {
                 const led2IntensityValue = fromUser.led2IntensityValue || 'N/A';
+                led2IntensitySlider.value = led2IntensityValue;
                 led2IntensityValueDisplay.innerText = `${led2IntensityValue}`;
 
                 const led2OnValue = fromUser.led2OnValue || 'N/A';
+                led2OnSlider.value = led2OnValue;
                 led2OnValueDisplay.innerText = `${led2OnValue}`;
 
                 const led2StartValue = fromUser.led2StartValue || 'N/A';
+                led2StartSlider.value = led2StartValue;
                 led2StartValueDisplay.innerText = `${led2StartValue}`;
             }
 
@@ -107,7 +123,7 @@ function fetchDataAndUpdateUI() {
 }
 
 ///////////////// USER DATA /////////////////////////////
-const pump1OnSlider = document.getElementById('pump1-on-slider');
+//const pump1OnSlider = document.getElementById('pump1-on-slider');
 //const pump1OnValueDisplay = document.getElementById('pump1-on-value');
 
 if(pump1OnSlider != null) {
@@ -129,11 +145,6 @@ if(pump1OnSlider != null) {
     });    
 }
 
-
-
-
-const pump1OffSlider = document.getElementById('pump1-off-slider');
-
 if(pump1OffSlider != null) {
 pump1OffSlider.addEventListener('input', function() {
     const pump1OffValue = this.value;
@@ -152,8 +163,6 @@ pump1OffSlider.addEventListener('input', function() {
     .catch((error) => console.error('Error:', error));
 });
 }
-
-const led1IntensitySlider = document.getElementById('led1-intensity-slider');
 
 if(led1IntensitySlider != null) {
 led1IntensitySlider.addEventListener('input', function() {
@@ -175,8 +184,6 @@ led1IntensitySlider.addEventListener('input', function() {
 
 }
 
-const led2IntensitySlider = document.getElementById('led2-intensity-slider');
-
 if(led2IntensitySlider != null) {
 led2IntensitySlider.addEventListener('input', function() {
     const led2IntensityValue = this.value;
@@ -196,8 +203,6 @@ led2IntensitySlider.addEventListener('input', function() {
 });
 
 }
-
-const led1OnSlider = document.getElementById('led1-ON-slider');
 
 if(led1OnSlider != null) {
     led1OnSlider.addEventListener('input', function() {
@@ -219,7 +224,7 @@ if(led1OnSlider != null) {
 
 }
 
-const led2OnSlider = document.getElementById('led2-ON-slider');
+
 
 if(led2OnSlider != null) {
     led2OnSlider.addEventListener('input', function() {
@@ -241,7 +246,6 @@ if(led2OnSlider != null) {
 
 }
 
-const led1StartSlider = document.getElementById('led1-start-slider');
 
 if(led1StartSlider != null) {
     led1StartSlider.addEventListener('input', function() {
@@ -262,9 +266,6 @@ if(led1StartSlider != null) {
 });
 
 }
-
-const led2StartSlider = document.getElementById('led2-start-slider');
-
 
 if(led2StartSlider != null) {
     led2StartSlider.addEventListener('input', function() {
