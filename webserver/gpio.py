@@ -2,6 +2,9 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 import json  # Importer le module json
+import os
+import glob
+
 
 # Pins Setup
 pump1Pin = 26
@@ -132,6 +135,34 @@ def update_system_data(temperature, tds):
         file.truncate()
 
 
+######### DS18B20 temp ##########
+
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
+
+base_dir = '/sys/bus/w1/devices/'
+device_folder = glob.glob(base_dir + '28*')[0]
+device_file = device_folder + '/w1_slave'
+
+def read_temp_raw():
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+    return lines
+
+def read_temp():
+    lines = read_temp_raw()
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.2)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        return temp_c
+
+###############################################
+
 try:
     while True:
         #pump control by user
@@ -144,8 +175,8 @@ try:
         update_led_status(read_led1_start_hour(), read_led1_on_time(), pwm_led1, intensity = read_led1_intensity())
         update_led_status(read_led2_start_hour(), read_led2_on_time(), pwm_led2, intensity = read_led2_intensity())
 
-        # Gestion de la température (exemple)
-        temperature = 25  # Remplacer par une vraie lecture de température
+        # Gestion de la température
+        temperature = read_temp()
 
         update_system_data(temperature, tds)
         print("Mise à jour des données environnementales dans data.json")
