@@ -1,31 +1,22 @@
-import os
-import glob
+import Adafruit_DHT
 import time
 
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
+# Configuration du capteur :
+DHT_SENSOR = Adafruit_DHT.DHT11
+DHT_PIN = 2  # Assurez-vous que ce numéro de broche est correct pour votre configuration
 
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
+def read_dht11():
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    if humidity is not None and temperature is not None:
+        print("Temperature = {:.1f} °C".format(temperature))
+        print("Humidite = {:.1f} %".format(humidity))
+    else:
+        print("Echec de lecture du capteur. Verifiez votre cablage.")
 
-def read_temp_raw():
-    f = open(device_file, 'r')
-    lines = f.readlines()
-    f.close()
-    return lines
+def main():
+    while True:
+        read_dht11()
+        time.sleep(10)  # Attend 10 secondes avant de relire
 
-def read_temp():
-    lines = read_temp_raw()
-    while lines[0].strip()[-3:] != 'YES':
-        time.sleep(0.2)
-        lines = read_temp_raw()
-    equals_pos = lines[1].find('t=')
-    if equals_pos != -1:
-        temp_string = lines[1][equals_pos+2:]
-        temp_c = float(temp_string) / 1000.0
-        return temp_c
-
-while True:
-    print("Temperature = {:.1f} C".format(read_temp()))
-    time.sleep(1)
+if _name_ == "_main_":
+    main()

@@ -136,6 +136,7 @@ def update_system_data(temperature, tds):
 
 
 ######### DS18B20 temp ##########
+        # 1 - wire GPIO4 - voir fichier de config 
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
