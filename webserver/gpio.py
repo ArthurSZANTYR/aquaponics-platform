@@ -4,17 +4,21 @@ import RPi.GPIO as GPIO
 import json  # Importer le module json
 import os
 import glob
+import serial
 
+# Initialiser la connexion série avec arduino (usb)
+ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser.flush()
 
 # Pins Setup
 pump1Pin = 26
-tdsPin = 24
+#tdsPin = 24
 led1Pin = 13
 led2Pin = 12
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setup([tdsPin], GPIO.IN)
+#GPIO.setup([tdsPin], GPIO.IN)
 GPIO.setup([pump1Pin], GPIO.OUT)
 GPIO.setup([led1Pin], GPIO.OUT)
 GPIO.setup([led2Pin], GPIO.OUT)
@@ -58,10 +62,11 @@ def pump1_status():
         return "pump1Pin: LOW"
 
 def read_tds():
-    analog_value = GPIO.input(tdsPin)
-    #voltage = analog_value / ADC_RESOLUTION * VREF
-    #tds_value = voltage 
-    return analog_value
+    #lecture sur port analogique arduino
+    if ser.in_waiting > 0:
+        line = ser.readline().decode('utf-8').rstrip()
+
+    return int(line)
 
 
 def read_led1_intensity():    
@@ -168,16 +173,16 @@ try:
     while True:
         #pump control by user
         pump1_status()
-
-        # Gestion TDS (exemple)
-        tds = read_tds()
-        print(f"TDS : {tds}")
-
+        
         update_led_status(read_led1_start_hour(), read_led1_on_time(), pwm_led1, intensity = read_led1_intensity())
         update_led_status(read_led2_start_hour(), read_led2_on_time(), pwm_led2, intensity = read_led2_intensity())
 
         # Gestion de la température
         temperature = read_temp()
+        tds = read_tds()
+        print(type(tds))
+        print(f"TDS : {tds}")
+
 
         update_system_data(temperature, tds)
         print("Mise à jour des données environnementales dans data.json")
