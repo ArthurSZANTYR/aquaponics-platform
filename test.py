@@ -1,22 +1,12 @@
-import Adafruit_DHT
+import serial
 import time
 
-# Configuration du capteur :
-DHT_SENSOR = Adafruit_DHT.DHT11
-DHT_PIN = 2  # Assurez-vous que ce numéro de broche est correct pour votre configuration
+# Initialiser la connexion série (assurez-vous que le port est correct)
+ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser.flush()
 
-def read_dht11():
-    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-    if humidity is not None and temperature is not None:
-        print("Temperature = {:.1f} °C".format(temperature))
-        print("Humidite = {:.1f} %".format(humidity))
-    else:
-        print("Echec de lecture du capteur. Verifiez votre cablage.")
-
-def main():
-    while True:
-        read_dht11()
-        time.sleep(10)  # Attend 10 secondes avant de relire
-
-if _name_ == "_main_":
-    main()
+while True:
+    if ser.in_waiting > 0:
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f"Valeur lue du capteur TDS: {line}")
+        # Ici, vous pouvez ajouter un traitement supplémentaire des données
