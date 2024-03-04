@@ -181,7 +181,8 @@ try:
         # Gestion de la température
         #temperature = read_temp()
         temperature = 25
-        tds = read_tds()
+        #tds = read_tds()
+        tds = 1225
         print(type(tds))
         print(f"TDS : {tds}")
 
