@@ -179,7 +179,8 @@ try:
         update_led_status(read_led2_start_hour(), read_led2_on_time(), pwm_led2, intensity = read_led2_intensity())
 
         # Gestion de la température
-        temperature = read_temp()
+        #temperature = read_temp()
+        temperature = 25
         tds = read_tds()
         print(type(tds))
         print(f"TDS : {tds}")
