@@ -143,12 +143,12 @@ def update_system_data(temperature, tds):
 ######### DS18B20 temp ##########
         # 1 - wire GPIO4 - voir fichier de config 
 
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
-
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
+#os.system('modprobe w1-gpio')
+#os.system('modprobe w1-therm')
+#
+#base_dir = '/sys/bus/w1/devices/'
+#device_folder = glob.glob(base_dir + '28*')[0]
+#device_file = device_folder + '/w1_slave'
 
 def read_temp_raw():
     f = open(device_file, 'r')
