@@ -7,8 +7,8 @@ import glob
 import serial
 
 # Initialiser la connexion série avec arduino (usb)
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-ser.flush()
+#ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+#ser.flush()
 
 # Pins Setup
 pump1Pin = 26
@@ -187,7 +187,7 @@ try:
         print(f"TDS : {tds}")
 
 
-        update_system_data(temperature, tds)
+        #update_system_data(temperature, tds)
         print("Mise à jour des données environnementales dans data.json")
 
 
