@@ -287,7 +287,3 @@ if(led2StartSlider != null) {
 
 }
 
-
-
-
-

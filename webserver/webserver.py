@@ -24,9 +24,17 @@ def led1():
 def led2():
     return render_template('led2.html')
 
+@app.route('/vision.html')
+def vision():
+    return render_template('vision.html')
+
 @app.route('/data.json')
 def data_json():
     return send_from_directory(os.getcwd(), 'data.json')
+
+@app.route('/onnx_model.onnx')
+def onnx_model():
+    return send_from_directory(os.getcwd(), './computer_vision/onnx_model.onnx')
 
 @app.route('/update-pump-interval', methods=['POST'])
 def update_pump_interval():
