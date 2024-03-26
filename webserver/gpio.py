@@ -65,6 +65,7 @@ def read_tds():
     #lecture sur port analogique arduino
     print("tesssssssssst ttttttttttttddddddddddddddddsssssssssssssss")
     print(ser.in_waiting)
+    print(ser.readline().decode('utf-8').rstrip())
     if ser.in_waiting > 0:
         line = ser.readline().decode('utf-8').rstrip()
         print(line)
