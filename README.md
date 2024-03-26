@@ -50,6 +50,8 @@ it will look like this for example on your terminal :
   <img src="media/webapp.gif" alt="WebApp demo" width="250">
 </p>
 
+## THANKS
+
 <p align="center">
   <img src="media/romain.gif" alt="WebApp demo">
 </p>
