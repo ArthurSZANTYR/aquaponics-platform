@@ -6,19 +6,19 @@ import os
 import glob
 import serial
 
-# Initialiser la connexion série avec arduino (usb)
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-ser.flush()
+## Initialiser la connexion série avec arduino (usb)
+#ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+#ser.flush()
 
 # Pins Setup
 pump1Pin = 26
-tdsPin = 24
+#tdsPin = 24
 led1Pin = 13
 led2Pin = 19
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setup([tdsPin], GPIO.IN)
+#GPIO.setup([tdsPin], GPIO.IN)
 GPIO.setup([pump1Pin], GPIO.OUT)
 GPIO.setup([led1Pin], GPIO.OUT)
 GPIO.setup([led2Pin], GPIO.OUT)
@@ -61,16 +61,16 @@ def pump1_status():
         GPIO.output(pump1Pin, GPIO.LOW)
         return "pump1Pin: LOW"
 
-def read_tds():
-    #lecture sur port analogique arduino
-    print("tesssssssssst ttttttttttttddddddddddddddddsssssssssssssss")
-    print(ser.in_waiting)
-    print(ser.readline().decode('utf-8').rstrip())
-    if ser.in_waiting > 0:
-        line = ser.readline().decode('utf-8').rstrip()
-        print(line)
-
-    return int(line)
+#def read_tds():
+#    #lecture sur port analogique arduino
+#    print("tesssssssssst ttttttttttttddddddddddddddddsssssssssssssss")
+#    print(ser.in_waiting)
+#    print(ser.readline().decode('utf-8').rstrip())
+#    if ser.in_waiting > 0:
+#        line = ser.readline().decode('utf-8').rstrip()
+#        print(line)
+#
+#    return int(line)
 
 
 def read_led1_intensity():    
@@ -185,9 +185,9 @@ try:
         # Gestion de la température
         #temperature = read_temp()
         temperature = 25
-        tds = read_tds()
-        print(f"TDS : {tds}")
-        #tds = 1225
+        #tds = read_tds()
+        #print(f"TDS : {tds}")
+        tds = 487
 
         update_system_data(temperature, tds)
         print("Mise à jour des données environnementales dans data.json")
