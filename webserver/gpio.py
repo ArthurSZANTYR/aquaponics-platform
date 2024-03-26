@@ -188,7 +188,7 @@ try:
         print("Mise à jour des données environnementales dans data.json")
 
 
-        # Délai avant la prochaine vérification
+        #Délai avant la prochaine vérification
         time.sleep(5)  # Pause de 5 secondes
 
 except KeyboardInterrupt:
