@@ -4,9 +4,9 @@
         "tds": 453
     },
     "fromUser": {
-        "pump1OnValue": "2",
-        "pump1OffValue": "6",
-        "led1IntensityValue": "0",
+        "pump1OnValue": "1",
+        "pump1OffValue": "8",
+        "led1IntensityValue": "1",
         "led2IntensityValue": "1",
         "led1OnValue": "14",
         "led2OnValue": "19",

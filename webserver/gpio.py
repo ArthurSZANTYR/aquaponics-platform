@@ -63,7 +63,9 @@ def pump1_status():
 
 def read_tds():
     #lecture sur port analogique arduino
+    print(ser.in_waiting)
     if ser.in_waiting > 0:
+	print(line)
         line = ser.readline().decode('utf-8').rstrip()
 
     return int(line)
@@ -185,7 +187,7 @@ try:
         print(f"TDS : {tds}")
         #tds = 1225
 
-        #update_system_data(temperature, tds)
+        update_system_data(temperature, tds)
         print("Mise à jour des données environnementales dans data.json")
 
 
