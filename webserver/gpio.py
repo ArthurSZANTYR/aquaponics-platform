@@ -14,7 +14,7 @@ import serial
 pump1Pin = 26
 #tdsPin = 24
 led1Pin = 13
-led2Pin = 12
+led2Pin = 18
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
